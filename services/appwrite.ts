@@ -45,16 +45,20 @@ export const updataeSearchCount = async (query: string, product: Product) => {
         throw error;
     }
 }
-export const getTrendingProducts = async (): Promise<TrendingProducts[] | undefined> => {
+export const getTrendingProducts = async (): Promise<{ id: any; name: any; pictureUrl: any }[]> => {
     try {
         const result = await database.listDocuments(DATABASE_ID, COLLECTION_ID, [
             Query.limit(5),
-            Query.orderDesc('count')
-        ])
+            Query.orderDesc("count"),
+        ]);
 
-        return result.documents as unknown as TrendingProducts[];
-    }   catch (error) {
+        return result.documents.map((doc) => ({
+            id: doc.product_id,
+            name: doc.name,
+            pictureUrl: doc.pictureUrl,
+        }));
+    } catch (error) {
         console.log(error);
-        throw undefined;
+        throw error;
     }
-}
+};

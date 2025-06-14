@@ -38,16 +38,20 @@ export const searchProducts = async ({ query }: { query: string }) => {
     }
 };
 
-export const fetchProductDetails = async (id: string):Promise<Product>  => {
+export const fetchProductDetails = async (id: string): Promise<Product> => {
     try {
-        const response = await fetch(API_URL+`/products/${id}`)
-        if(!response.ok) throw new Error("No product found");
+        const response = await fetch(`${API_URL}/products/${id}`);
+        if (!response.ok) throw new Error("No product found");
 
         const data = await response.json();
+
+        if (data.pictureUrl) {
+            data.pictureUrl = data.pictureUrl.replace("https://localhost:5001", "http://192.168.0.28:5000");
+        }
 
         return data;
     } catch (err) {
         console.error(err);
         throw err;
     }
-}
+};

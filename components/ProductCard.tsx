@@ -14,7 +14,7 @@ const ProductCard = ({
                      }: Product) => {
     return (
         // @ts-ignore
-        <Link href={`product/${id}`} asChild>
+        <Link href={`products/${id}`} asChild>
             <TouchableOpacity className="w-[48%] mb-3 mt-2">
                 <Image
                     source={{ uri: pictureUrl }}

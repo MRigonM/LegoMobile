@@ -100,6 +100,7 @@ export default function Index() {
     };
 
 
+    // @ts-ignore
     return (
         <View className="flex-1 bg-primary">
             <Image source={images.bg} className="absolute w-full z-0" resizeMode="cover" />
@@ -155,6 +156,7 @@ export default function Index() {
                                         }
                                         ItemSeparatorComponent={() => <View className={"w-2"} />}
                                         renderItem={({ item, index }) => (
+                                            //@ts-ignore
                                             <TrendingCard product={item} index={index} />
                                         )}
                                     />
