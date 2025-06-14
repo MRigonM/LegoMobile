@@ -1,0 +1,51 @@
+﻿import { Link } from "expo-router";
+import { View, Text, TouchableOpacity, Image } from "react-native";
+import { images } from "@/constants/images";
+import {MaskedView} from "@/node_modules/@react-navigation/elements/src/MaskedView";
+
+const TrendingCard = ({product: { id, name, pictureUrl }, index}: TrendingCardProduct) => {
+
+    console.log("TrendingCard pictureUrl:", pictureUrl);
+
+    return (
+        <TouchableOpacity
+            className="items-center"
+            style={{
+                width: 160, // Fixed width instead of w-[50%]
+            }}
+        >
+            <Image
+                source={{ uri: pictureUrl }}
+                className="rounded-lg"
+                style={{
+                    width: 150, // Same fixed width
+                    height: 150, // Fixed height instead of aspectRatio
+                }}
+                resizeMode="cover"
+            />
+
+            <View className="absolute bottom-9 -left-3.5 px-2 py-1 rounded-full">
+                <MaskedView
+                    maskElement={
+                        <Text className="font-bold text-white text-6xl">{index + 1}</Text>
+                    }
+                >
+                    <Image
+                        source={images.rankingGradient}
+                        className="size-14"
+                        resizeMode="cover"
+                    />
+                </MaskedView>
+            </View>
+
+            <Text
+                className="text-sm font-bold mt-2 text-light-200"
+                numberOfLines={2}
+            >
+                {name}
+            </Text>
+        </TouchableOpacity>
+    );
+};
+
+export default TrendingCard;

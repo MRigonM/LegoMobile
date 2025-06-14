@@ -42,9 +42,9 @@ const _Layout = () => {
                 tabBarStyle: {
                     backgroundColor: "#0f0D23",
                     borderRadius: 50,
-                    marginHorizontal: 20,
-                    marginBottom: 36,
-                    height: 52,
+                    marginHorizontal: 45,
+                    marginBottom: 30,
+                    height: 50,
                     position: "absolute",
                     overflow: "hidden",
                     borderWidth: 1,
@@ -65,20 +65,20 @@ const _Layout = () => {
                         />
                     )
                 }}/>
-            <Tabs.Screen
-                name="search"
-                options={{
-                    title: 'Search',
-                    headerShown: false,
-                    tabBarIcon: ({focused}) => (
-                        <TabIcon
-                            focused={focused}
-                            icon={icons.search}
-                            title="Search"
-                        />
-                    )
+            {/*<Tabs.Screen*/}
+            {/*    name="search"*/}
+            {/*    options={{*/}
+            {/*        title: 'Search',*/}
+            {/*        headerShown: false,*/}
+            {/*        tabBarIcon: ({focused}) => (*/}
+            {/*            <TabIcon*/}
+            {/*                focused={focused}*/}
+            {/*                icon={icons.search}*/}
+            {/*                title="Search"*/}
+            {/*            />*/}
+            {/*        )*/}
 
-                }}/>
+            {/*    }}/>*/}
             <Tabs.Screen
                 name="saved"
                 options={{

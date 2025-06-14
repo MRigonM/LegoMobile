@@ -1,4 +1,4 @@
-﻿import { Product } from "@/services/models/product";
+﻿import { Product } from "@/services/product/models/product";
 import { Link } from "expo-router";
 import {Image, Text, TouchableOpacity, View} from "react-native";
 import {icons} from "@/constants/icons";
