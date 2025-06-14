@@ -155,7 +155,7 @@ export default function Index() {
                                         }
                                         ItemSeparatorComponent={() => <View className={"w-2"} />}
                                         renderItem={({ item, index }) => (
-                                            <TrendingCard key={item.id ?? index}  product={item} index={index} />
+                                            <TrendingCard product={item} index={index} />
                                         )}
                                     />
                                 )}

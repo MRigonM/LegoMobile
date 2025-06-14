@@ -1,6 +1,8 @@
 ﻿import { api } from "@/services/api";
+import {Product} from "@/services/product/models/product";
 
 const LOCAL_IP = "http://192.168.0.28:5000";
+const API_URL = process.env.API_URL || 'http://192.168.0.28:5000/api';
 
 export const getAllProducts = async () => {
     try {
@@ -35,3 +37,17 @@ export const searchProducts = async ({ query }: { query: string }) => {
         throw error;
     }
 };
+
+export const fetchProductDetails = async (id: string):Promise<Product>  => {
+    try {
+        const response = await fetch(API_URL+`/products/${id}`)
+        if(!response.ok) throw new Error("No product found");
+
+        const data = await response.json();
+
+        return data;
+    } catch (err) {
+        console.error(err);
+        throw err;
+    }
+}

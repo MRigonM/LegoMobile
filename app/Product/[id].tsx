@@ -1,10 +1,10 @@
 ﻿import {Text, View} from "react-native";
 
-const MovieDetails = () => {
+const ProductDetails = () => {
     return (
         <View>
             <Text>MovieDetails</Text>
         </View>
     )
 }
-export default MovieDetails
+export default ProductDetails

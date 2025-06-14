@@ -1,4 +1,5 @@
 ﻿import axios from 'axios';
+import {Product} from "@/services/product/models/product";
 
 const API_URL = process.env.API_URL || 'http://192.168.0.28:5000/api';
 
