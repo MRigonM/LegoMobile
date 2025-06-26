@@ -1,25 +1,38 @@
 ﻿import { api } from "@/services/api";
 import {Product} from "@/services/product/models/product";
 
-const LOCAL_IP = "http://192.168.0.28:5000";
-const API_URL = process.env.API_URL || 'http://192.168.0.28:5000/api';
+const LOCAL_IP = "http://192.168.0.29:5000";
+const API_URL = process.env.API_URL || 'http://192.168.0.29:5000/api';
 
-export const getAllProducts = async () => {
+interface ProductQueryParams {
+    pageIndex?: number;
+    pageSize?: number;
+    brandId?: number;
+    typeId?: number;
+    sort?: string;
+    search?: string;
+}
+
+export const getAllProducts = async (params: ProductQueryParams = {}) => {
     try {
-        const response = await api.get("/products");
+        const response = await api.get("/products", { params });
 
-        const updated = response.data.data.map((product: any) => ({
+        const pagination = response.data;
+
+        const updatedData = pagination.data.map((product: any) => ({
             ...product,
             pictureUrl: product.pictureUrl.replace("https://localhost:5001", LOCAL_IP),
         }));
 
-        return updated;
+        return {
+            ...pagination,
+            data: updatedData,
+        };
     } catch (error: any) {
-        console.error("Error fetching all products:", error.message);
+        console.error("Error fetching products:", error.message);
         throw error;
     }
 };
-
 export const searchProducts = async ({ query }: { query: string }) => {
     try {
         const response = await api.get("/products", {
@@ -46,7 +59,7 @@ export const fetchProductDetails = async (id: string): Promise<Product> => {
         const data = await response.json();
 
         if (data.pictureUrl) {
-            data.pictureUrl = data.pictureUrl.replace("https://localhost:5001", "http://192.168.0.28:5000");
+            data.pictureUrl = data.pictureUrl.replace("https://localhost:5001", "http://192.168.0.29:5000");
         }
 
         return data;

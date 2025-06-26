@@ -1,4 +1,4 @@
-import {ActivityIndicator, FlatList, Image, ScrollView, Text, View, Keyboard} from "react-native";
+import {ActivityIndicator, FlatList, Image, ScrollView, Text, View, Keyboard, TouchableOpacity} from "react-native";
 import {useCallback, useEffect, useState} from "react";
 import {useFocusEffect, useNavigation, useRouter} from "expo-router";
 import { icons } from "@/constants/icons";
@@ -22,10 +22,22 @@ export default function Index() {
     const [submittedQuery, setSubmittedQuery] = useState("");
     const navigation = useNavigation();
 
+    const [pageIndex, setPageIndex] = useState(1);
+    const [totalCount, setTotalCount] = useState(0);
+    const pageSize = 6;
+    const totalPages = Math.ceil(totalCount / pageSize);
+
+
     const handleRefresh = async () => {
         setLoading(true);
         try {
-            const result = await getAllProducts();
+            const result = await getAllProducts({
+                pageIndex,
+                pageSize,
+                sort: "priceAsc", // or "priceDesc", "name", etc.
+                brandId: undefined,
+                typeId: undefined,
+            });
             setProducts(result);
             setSubmittedQuery("");
             setSearchQuery("");
@@ -58,8 +70,10 @@ export default function Index() {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const result = await getAllProducts();
-                setProducts(result);
+                setLoading(true);
+                const result = await getAllProducts({ pageIndex, pageSize });
+                setProducts(result.data);
+                setTotalCount(result.count);
             } catch (err: any) {
                 setError(err);
             } finally {
@@ -67,7 +81,20 @@ export default function Index() {
             }
         };
         fetchProducts();
-    }, []);
+    }, [pageIndex]);
+
+    const fetchNextPage = async () => {
+        if (products.length >= totalCount) return; // No more products
+
+        try {
+            const nextPage = pageIndex + 1;
+            const result = await getAllProducts({ pageIndex: nextPage, pageSize });
+            setProducts((prev) => [...prev, ...result.data]);
+            setPageIndex(nextPage);
+        } catch (err) {
+            console.error("Pagination fetch failed:", err);
+        }
+    };
 
     useEffect(() => {
         const fetchSearchResults = async () => {
@@ -182,8 +209,52 @@ export default function Index() {
                                     paddingRight: 5,
                                     marginBottom: 10,
                                 }}
-                                className="mt-4 pb-32"
+                                className="mt-4"
                                 scrollEnabled={false}
+                                ListFooterComponent={
+                                    <View className="mb-28 mt-5 flex-row justify-center items-center px-5">
+                                        <TouchableOpacity
+                                            disabled={pageIndex === 1}
+                                            onPress={() => pageIndex > 1 && setPageIndex(pageIndex - 1)}
+                                            activeOpacity={0.8}
+                                            className={`rounded-lg px-4 py-2 mr-3 ${
+                                                pageIndex === 1 ? "bg-gray-500" : "bg-accent"
+                                            }`}
+                                        >
+                                            <Text className="text-white font-bold text-base">{'←'}</Text>
+                                        </TouchableOpacity>
+
+                                        {Array.from({ length: totalPages }, (_, i) => (
+                                            <TouchableOpacity
+                                                key={i}
+                                                onPress={() => setPageIndex(i + 1)}
+                                                activeOpacity={0.8}
+                                                className={`rounded-lg px-4 py-2 mr-3 ${
+                                                    pageIndex === i + 1 ? "bg-accent" : "bg-gray-700"
+                                                }`}
+                                            >
+                                                <Text
+                                                    className={`font-bold text-base ${
+                                                        pageIndex === i + 1 ? "text-white" : "text-white"
+                                                    }`}
+                                                >
+                                                    {i + 1}
+                                                </Text>
+                                            </TouchableOpacity>
+                                        ))}
+
+                                        <TouchableOpacity
+                                            disabled={pageIndex === totalPages}
+                                            onPress={() => pageIndex < totalPages && setPageIndex(pageIndex + 1)}
+                                            activeOpacity={0.8}
+                                            className={`rounded-lg px-4 py-2 ${
+                                                pageIndex === totalPages ? "bg-gray-500" : "bg-accent"
+                                            }`}
+                                        >
+                                            <Text className="text-white font-bold text-base">{'→'}</Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                }
                             />
                         )}
                     </View>
