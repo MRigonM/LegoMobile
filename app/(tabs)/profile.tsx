@@ -52,49 +52,50 @@ const Profile = () => {
     };
 
     return (
-        <View className="bg-primary flex-1 px-10">
-            <View className="flex justify-center items-center flex-1 flex-col gap-5">
-                <Image
-                    source={icons.person}
-                    className="size-10"
-                    tintColor="#fff"
-                />
+        <View className="flex-1 bg-primary px-8 py-12">
+            <View className="flex-1 justify-center items-center">
+                {!isAuthenticated ? (
+                    <View className="w-full items-center">
+                        <Text className="text-white text-2xl font-bold text-center mb-8">
+                            Already a member? Sign in!
+                        </Text>
 
-                {isAuthenticated ? (
-                    <>
-                        <Text className="text-white text-lg">
-                            Welcome {userName}!
+                        <View className="w-full">
+                            <TouchableOpacity
+                                //@ts-ignore
+                                onPress={() => router.push("login")}
+                                className="bg-accent w-full py-4 rounded-xl items-center mb-4"
+                            >
+                                <Text className="text-white text-lg font-bold">Login</Text>
+                            </TouchableOpacity>
+
+                            <Text className="text-white text-lg text-center mb-4">or</Text>
+
+                            <TouchableOpacity
+                                //@ts-ignore
+                                onPress={() => router.push("register")}
+                                className="border border-white w-full py-4 rounded-xl items-center"
+                            >
+                                <Text className="text-white text-lg font-bold">Register</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                ) : (
+                    <View className="w-full items-center">
+                        <Text className="text-white text-2xl font-bold text-center mb-4">
+                            Welcome, {userName}!
+                        </Text>
+                        <Text className="text-white text-base text-center opacity-80 mb-8">
+                            Manage your account settings and preferences.
                         </Text>
 
                         <TouchableOpacity
                             onPress={handleLogout}
-                            className="bg-red-500 px-6 py-2 rounded-lg"
+                            className="bg-red-500 w-full py-4 rounded-xl items-center"
                         >
-                            <Text className="text-white font-semibold">Logout</Text>
+                            <Text className="text-white text-lg font-bold">Logout</Text>
                         </TouchableOpacity>
-                    </>
-                ) : (
-                    <>
-                        <Text className="text-white text-lg text-center">
-                            You are not logged in
-                        </Text>
-
-                        <TouchableOpacity
-                            //@ts-ignore
-                            onPress={() => router.push("login")}
-                            className="bg-accent px-6 py-2 rounded-lg"
-                        >
-                            <Text className="text-white font-semibold">Login</Text>
-                        </TouchableOpacity>
-
-                        <TouchableOpacity
-                            //@ts-ignore
-                            onPress={() => router.push("register")}
-                            className="border border-white px-6 py-2 rounded-lg"
-                        >
-                            <Text className="text-white font-semibold">Register</Text>
-                        </TouchableOpacity>
-                    </>
+                    </View>
                 )}
             </View>
         </View>
