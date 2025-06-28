@@ -23,8 +23,15 @@ export const login = async (loginDto: LoginDto): Promise<UserDto> => {
 
 export const register = async (registerDto: RegisterDto): Promise<UserDto> => {
     const res = await axios.post<UserDto>(`${API_URL}/register`, registerDto);
-    await SecureStore.setItemAsync('jwt_token', res.data.token);
-    return res.data;
+    const user = res.data;
+    await SecureStore.setItemAsync('jwt_token', user.token);
+
+    await SecureStore.setItemAsync('user_info', JSON.stringify({
+        email: user.email,
+        displayName: user.displayName
+    }));
+
+    return user;
 };
 
 export const logout = async () => {
