@@ -3,7 +3,7 @@ import { icons } from "@/constants/icons";
 import { useEffect, useState } from "react";
 import * as SecureStore from 'expo-secure-store';
 import { useRouter } from "expo-router";
-import {getCurrentUser, logout as logoutService} from "@/services/auth/authService";
+import {logout as logoutService} from "@/services/auth/authService";
 
 const Profile = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -18,13 +18,20 @@ const Profile = () => {
 
             if (token) {
                 setIsAuthenticated(true);
+
                 try {
-                    console.log('Fetching current user...');
-                    const user = await getCurrentUser();
-                    console.log(user.displayName);
-                    setUserName(user.displayName);
+                    const userJson = await SecureStore.getItemAsync('user_info');
+                    if (userJson) {
+                        const userObj = JSON.parse(userJson);
+                        console.log('Loaded user from SecureStore:', userObj);
+                        setUserName(userObj.displayName);
+                    } else {
+                        console.log('No user_info found in SecureStore');
+                        setUserName(null);
+                    }
+
                 } catch (error) {
-                    console.error("Error fetching user:", error);
+                    console.error("Error fetching user from store:", error);
                     setIsAuthenticated(false);
                     setUserName(null);
                 }
@@ -33,8 +40,10 @@ const Profile = () => {
                 setUserName(null);
             }
         };
+
         checkAuth();
     }, []);
+
 
     const handleLogout = async () => {
         await logoutService();

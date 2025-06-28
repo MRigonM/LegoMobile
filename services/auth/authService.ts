@@ -9,8 +9,16 @@ const API_URL = 'http://192.168.0.29:5000/api/account';
 
 export const login = async (loginDto: LoginDto): Promise<UserDto> => {
     const res = await axios.post<UserDto>(`${API_URL}/login`, loginDto);
-    await SecureStore.setItemAsync('jwt_token', res.data.token);
-    return res.data;
+    const user = res.data;
+
+    await SecureStore.setItemAsync('jwt_token', user.token);
+
+    await SecureStore.setItemAsync('user_info', JSON.stringify({
+        email: user.email,
+        displayName: user.displayName
+    }));
+
+    return user;
 };
 
 export const register = async (registerDto: RegisterDto): Promise<UserDto> => {
