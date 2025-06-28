@@ -27,6 +27,9 @@ export default function Index() {
     const pageSize = 6;
     const totalPages = Math.ceil(totalCount / pageSize);
 
+    const [selectedBrand, setSelectedBrand] = useState<number | undefined>();
+    const [selectedType, setSelectedType] = useState<number | undefined>();
+    const [selectedSort, setSelectedSort] = useState<string>("name");
 
     const handleRefresh = async () => {
         setLoading(true);
