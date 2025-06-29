@@ -34,7 +34,6 @@ const MovieInfo = ({ description, price }: ProductInfo) => (
 
 const ProductDetails = () => {
     const { id } = useLocalSearchParams();
-    console.log("Product ID: " + id);
 
     const fetchFn = useCallback(() => {
         return fetchProductDetails(id as string);

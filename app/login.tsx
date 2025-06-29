@@ -24,7 +24,6 @@ export default function Login() {
         setLoading(true);
         try {
             const user = await login({ email, password });
-            console.log("Logged in:", user.displayName);
             router.replace("/(tabs)/profile");
         } catch (err: any) {
             console.error(err);

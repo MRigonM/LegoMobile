@@ -14,7 +14,6 @@ const Profile = () => {
     useEffect(() => {
         const checkAuth = async () => {
             const token = await SecureStore.getItemAsync('jwt_token');
-            console.log('Token from SecureStore:', token ? 'exists' : 'not found');
 
             if (token) {
                 setIsAuthenticated(true);
@@ -23,10 +22,8 @@ const Profile = () => {
                     const userJson = await SecureStore.getItemAsync('user_info');
                     if (userJson) {
                         const userObj = JSON.parse(userJson);
-                        console.log('Loaded user from SecureStore:', userObj);
                         setUserName(userObj.displayName);
                     } else {
-                        console.log('No user_info found in SecureStore');
                         setUserName(null);
                     }
 
