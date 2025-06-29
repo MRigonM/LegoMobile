@@ -39,6 +39,13 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "a12dac71-29f7-4c45-97a9-f434324ecd86"
+      }
+    },
+    "owner": "rigonbaba"
   }
 }

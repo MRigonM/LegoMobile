@@ -68,3 +68,14 @@ export const fetchProductDetails = async (id: string): Promise<Product> => {
         throw err;
     }
 };
+
+export const getProductBrands = async () => {
+    const response = await api.get("/products/brands");
+    return response.data;
+};
+
+export const getProductTypes = async () => {
+    const response = await api.get("/products/types");
+    return response.data;
+};
+
