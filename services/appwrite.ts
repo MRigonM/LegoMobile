@@ -41,7 +41,6 @@ export const updataeSearchCount = async (query: string, product: Product) => {
             })
         }
     } catch (error) {
-        console.log("Error in updateSearchCount:", error);
         throw error;
     }
 }
@@ -58,7 +57,6 @@ export const getTrendingProducts = async (): Promise<{ id: any; name: any; pictu
             pictureUrl: doc.pictureUrl,
         }));
     } catch (error) {
-        console.log(error);
         throw error;
     }
 };

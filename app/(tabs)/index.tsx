@@ -141,8 +141,8 @@ export default function Index() {
 
                 setBrands([{ id: 0, name: 'All Brands' }, ...brandsData]);
                 setTypes([{ id: 0, name: 'All Types' }, ...typesData]);
-            } catch (error) {
-                console.error('Error fetching brands/types:', error);
+            } catch (error: any) {
+                throw error;
             }
         };
 
@@ -213,14 +213,14 @@ export default function Index() {
                                     />
                                 )}
 
-                                <Text className="text-lg text-white font-bold mt-5 mb-3">
+                                <Text className="text-lg text-white font-bold mt-3 mb-3">
                                     All Legos
                                 </Text>
                             </View>
                         )}
 
                         {!submittedQuery && (
-                            <View className="mt-4">
+                            <View className="my-3">
                                 <ScrollView horizontal showsHorizontalScrollIndicator={false} className="mb-2">
                                     {brands.map((b) => (
                                         <TouchableOpacity

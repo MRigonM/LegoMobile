@@ -26,7 +26,6 @@ export default function Register() {
             const user = await register({displayName, email, password });
             router.replace("/(tabs)/profile");
         } catch (err: any) {
-            console.error(err);
             Alert.alert("Register Failed", err.response?.data?.errors?.[0] || err.message);
         } finally {
             setLoading(false);

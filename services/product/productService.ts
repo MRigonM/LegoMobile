@@ -29,7 +29,6 @@ export const getAllProducts = async (params: ProductQueryParams = {}) => {
             data: updatedData,
         };
     } catch (error: any) {
-        console.error("Error fetching products:", error.message);
         throw error;
     }
 };
@@ -46,7 +45,6 @@ export const searchProducts = async ({ query }: { query: string }) => {
 
         return updated;
     } catch (error: any) {
-        console.error("Error searching products:", error.message);
         throw error;
     }
 };

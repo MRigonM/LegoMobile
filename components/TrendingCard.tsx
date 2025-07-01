@@ -5,11 +5,6 @@ import {MaskedView} from "@/node_modules/@react-navigation/elements/src/MaskedVi
 
 const TrendingCard = ({product: {id, name, pictureUrl}, index}: TrendingCardProduct) => {
 
-    if (!id) {
-        console.warn("TrendingCard received product without ID:");
-        return null;
-    }
-
     return (
         // @ts-ignore
         <Link href={`products/${id}`} asChild>
