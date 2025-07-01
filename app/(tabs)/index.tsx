@@ -10,6 +10,8 @@ import {getAllProducts, getProductBrands, getProductTypes, searchProducts} from 
 import {getTrendingProducts, updataeSearchCount} from "@/services/appwrite";
 import useFetch from "@/services/useFetch";
 import TrendingCard from "@/components/TrendingCard";
+import Dropdown from "@/components/Dropdown";
+
 
 export default function Index() {
     const router = useRouter();
@@ -220,55 +222,45 @@ export default function Index() {
                         )}
 
                         {!submittedQuery && (
-                            <View className="my-3">
-                                <ScrollView horizontal showsHorizontalScrollIndicator={false} className="mb-2">
-                                    {brands.map((b) => (
-                                        <TouchableOpacity
-                                            key={b.id}
-                                            onPress={() => {
-                                                setPageIndex(1);
-                                                setSelectedBrand(b.id);
-                                            }}
-                                            className={`px-3 py-1 rounded-full mr-2 ${selectedBrand === b.id ? 'bg-accent' : 'bg-gray-700'}`}
-                                            activeOpacity={0.8}
-                                        >
-                                            <Text className="text-white">{b.name}</Text>
-                                        </TouchableOpacity>
-                                    ))}
-                                </ScrollView>
+                            <View className="my-3 flex-row justify-between gap-3">
+                                {/* Left: Sort Dropdown */}
+                                <View className="flex-1">
+                                    <Dropdown
+                                        options={sortOptions.map((s, i) => ({ id: i, name: s.label }))}
+                                        selectedId={sortOptions.findIndex((s) => s.value === selectedSort)}
+                                        onSelect={(id: any) => {
+                                            setSelectedSort(sortOptions[id].value);
+                                            setPageIndex(1);
+                                        }}
+                                        placeholder="Sort"
+                                    />
+                                </View>
 
-                                <ScrollView horizontal showsHorizontalScrollIndicator={false} className="mb-2">
-                                    {types.map((t) => (
-                                        <TouchableOpacity
-                                            key={t.id}
-                                            onPress={() => {
-                                                setPageIndex(1);
-                                                setSelectedType(t.id);
-                                            }}
-                                            className={`px-3 py-1 rounded-full mr-2 ${selectedType === t.id ? 'bg-accent' : 'bg-gray-700'}`}
-                                            activeOpacity={0.8}
-                                        >
-                                            <Text className="text-white">{t.name}</Text>
-                                        </TouchableOpacity>
-                                    ))}
-                                </ScrollView>
-
-                                <ScrollView horizontal showsHorizontalScrollIndicator={false}>
-                                    {sortOptions.map((s) => (
-                                        <TouchableOpacity
-                                            key={s.value}
-                                            onPress={() => {
-                                                setPageIndex(1);
-                                                setSelectedSort(s.value);
-                                            }}
-                                            className={`px-3 py-1 rounded-full mr-2 ${selectedSort === s.value ? 'bg-accent' : 'bg-gray-700'}`}
-                                            activeOpacity={0.8}
-                                        >
-                                            <Text className="text-white">{s.label}</Text>
-                                        </TouchableOpacity>
-                                    ))}
-                                </ScrollView>
+                                {/* Right: Brand & Type Dropdowns stacked vertically */}
+                                <View className="flex-1">
+                                    <Dropdown
+                                        options={brands}
+                                        selectedId={selectedBrand}
+                                        onSelect={(id: any) => {
+                                            setSelectedBrand(id);
+                                            setPageIndex(1);
+                                        }}
+                                        placeholder="Brand"
+                                    />
+                                </View>
+                                <View className="flex-1">
+                                    <Dropdown
+                                        options={types}
+                                        selectedId={selectedType}
+                                        onSelect={(id: any) => {
+                                            setSelectedType(id);
+                                            setPageIndex(1);
+                                        }}
+                                        placeholder="Type"
+                                    />
+                                </View>
                             </View>
+
                         )}
 
                         {searching ? (
@@ -287,6 +279,7 @@ export default function Index() {
                                 }}
                                 className="mt-4"
                                 scrollEnabled={false}
+                                nestedScrollEnabled={true}
                                 ListFooterComponent={
                                     <View className="mb-28 mt-5 flex-row justify-center items-center px-5">
                                         <TouchableOpacity
