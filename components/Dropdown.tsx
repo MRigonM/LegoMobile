@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
         left: 0,
         right: 0,
         backgroundColor: "#1f2937", // tailwind bg-gray-800
-        borderRadius: 12, // Increased for more rounded corners
+        borderRadius: 8, // Increased for more rounded corners
         zIndex: 9999,
         elevation: 5,
         overflow: 'hidden', // This ensures the rounded corners are respected
