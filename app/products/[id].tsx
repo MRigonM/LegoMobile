@@ -94,7 +94,7 @@ const ProductDetails = () => {
                         {product?.productType} • {product?.productBrand}
                     </Text>
                 </View>
-                <MovieInfo description={product.description} price={product.price} />
+                <Info description={product.description} price={product.price} />
             </ScrollView>
         </View>
     );

@@ -2,6 +2,7 @@ import {View, TextInput, Text, Alert, TouchableOpacity} from "react-native";
 import { useState } from "react";
 import {Stack, useRouter} from "expo-router";
 import {register} from "@/controllers/auth/authController";
+import {showLocalNotification} from "@/controllers/notification";
 
 export default function Register() {
     const [displayName, setDisplayName] = useState("");
@@ -24,6 +25,8 @@ export default function Register() {
         setLoading(true);
         try {
             const user = await register({displayName, email, password });
+
+            await showLocalNotification("Welcome!", `Thanks for signing up, ${displayName}!`);
             router.replace("/(tabs)/profile");
         } catch (err: any) {
             Alert.alert("Register Failed", err.response?.data?.errors?.[0] || err.message);

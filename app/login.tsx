@@ -10,6 +10,7 @@
 import { useState } from "react";
 import {Stack, useRouter } from "expo-router";
 import {login} from "@/controllers/auth/authController";
+import { showLocalNotification } from "@/controllers/notification";
 
 export default function Login() {
     const [email, setEmail] = useState("");
@@ -24,6 +25,9 @@ export default function Login() {
         setLoading(true);
         try {
             const user = await login({ email, password });
+
+            await showLocalNotification("Login Successful", `Welcome back, ${user.displayName}!`);
+
             router.replace("/(tabs)/profile");
         } catch (err: any) {
             console.error(err);
