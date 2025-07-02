@@ -45,6 +45,7 @@ export default function Dropdown({
                     {selectedOption ? selectedOption.name : placeholder}
                 </Text>
                 <Text className="text-white text-sm">{expanded ? "↑" : "↓"}</Text>
+                {/*<Text className="text-white text-sm">{expanded ? "▲" : "▼"}</Text>*/}
             </TouchableOpacity>
 
             {expanded && (
