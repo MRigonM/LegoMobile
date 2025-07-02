@@ -1,9 +1,9 @@
 ﻿import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
-import {UserDto} from "@/services/auth/models/user";
-import {LoginDto} from "@/services/auth/models/login";
-import {RegisterDto} from "@/services/auth/models/register";
-import api from "@/services/api";
+import {UserDto} from "@/models/auth/user";
+import {LoginDto} from "@/models/auth/login";
+import {RegisterDto} from "@/models/auth/register";
+import api from "@/controllers/api";
 
 const API_URL = 'http://192.168.0.29:5000/api/account';
 

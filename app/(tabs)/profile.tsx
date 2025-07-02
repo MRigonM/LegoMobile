@@ -3,7 +3,7 @@ import { icons } from "@/constants/icons";
 import { useEffect, useState } from "react";
 import * as SecureStore from 'expo-secure-store';
 import { useRouter } from "expo-router";
-import {logout as logoutService} from "@/services/auth/authService";
+import {logout as logoutService} from "@/controllers/auth/authController";
 
 const Profile = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);

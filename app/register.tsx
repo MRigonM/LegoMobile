@@ -1,7 +1,7 @@
 import {View, TextInput, Text, Alert, TouchableOpacity} from "react-native";
 import { useState } from "react";
 import {Stack, useRouter} from "expo-router";
-import {register} from "@/services/auth/authService";
+import {register} from "@/controllers/auth/authController";
 
 export default function Register() {
     const [displayName, setDisplayName] = useState("");
