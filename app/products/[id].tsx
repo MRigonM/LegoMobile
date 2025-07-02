@@ -3,13 +3,14 @@ import { useLocalSearchParams } from "expo-router";
 import useFetch from "@/controllers/useFetch";
 import { fetchProductDetails } from "@/controllers/product/productController";
 import { useCallback } from "react";
+import * as Notifications from "expo-notifications";
 
 interface ProductInfo {
     description: string;
     price: number;
 }
 
-const MovieInfo = ({ description, price }: ProductInfo) => (
+const Info = ({ description, price }: ProductInfo) => (
     <View className={"flex-col items-start justify-center mt-5 px-5 pb-20"}>
         <Text className={"text-white font-bold text-4xl mb-3"}>
             {price}$
@@ -21,13 +22,21 @@ const MovieInfo = ({ description, price }: ProductInfo) => (
             {description}
         </Text>
         <TouchableOpacity
-            activeOpacity={0.8}
-            className="bg-accent absolute bottom-5 left-0 right-0 mx-5 rounded-lg py-3.5 flex flex-row items-center justify-center"
-            onPress={() => alert("Buy Now pressed!")}
+          activeOpacity={0.8}
+          className="bg-accent absolute bottom-5 left-0 right-0 mx-5 rounded-lg py-3.5 flex flex-row items-center justify-center"
+          onPress={() => {
+            Notifications.scheduleNotificationAsync({
+              content: {
+                title: "Purchase Started",
+                body: "You clicked Buy Now!",
+              },
+              trigger: null,
+            });
+          }}
         >
-            <Text className="text-white font-bold text-xl text-center">
-                Buy Now
-            </Text>
+          <Text className="text-white font-bold text-xl text-center">
+            Buy Now
+          </Text>
         </TouchableOpacity>
     </View>
 );

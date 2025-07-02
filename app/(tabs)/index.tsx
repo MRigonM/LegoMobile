@@ -11,7 +11,7 @@ import {getTrendingProducts, updataeSearchCount} from "@/controllers/appwrite";
 import useFetch from "@/controllers/useFetch";
 import TrendingCard from "@/components/TrendingCard";
 import Dropdown from "@/components/Dropdown";
-
+import * as Notifications from "expo-notifications";
 
 export default function Index() {
     const router = useRouter();
@@ -63,6 +63,19 @@ export default function Index() {
             setLoading(false);
         }
     };
+
+    useEffect(() => {
+        if (Array.isArray(trendingProducts) && trendingProducts.length > 0) {
+            Notifications.scheduleNotificationAsync({
+                content: {
+                    title: "Trending Legos!",
+                    body: `There are ${trendingProducts.length} hot items right now. Check them out!`,
+                },
+                trigger: { seconds: 1 },
+            });
+        }
+    }, [trendingProducts]);
+
 
     useFocusEffect(
         useCallback(() => {
