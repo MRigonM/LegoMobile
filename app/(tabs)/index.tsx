@@ -5,10 +5,10 @@ import { icons } from "@/constants/icons";
 import { images } from "@/constants/images";
 import SearchBar from "@/components/searchBar";
 import ProductCard from "@/components/ProductCard";
-import { Product } from "@/services/product/models/product";
-import {getAllProducts, getProductBrands, getProductTypes, searchProducts} from "@/services/product/productService";
-import {getTrendingProducts, updataeSearchCount} from "@/services/appwrite";
-import useFetch from "@/services/useFetch";
+import { Product } from "@/models/product/product";
+import {getAllProducts, getProductBrands, getProductTypes, searchProducts} from "@/controllers/product/productController";
+import {getTrendingProducts, updataeSearchCount} from "@/controllers/appwrite";
+import useFetch from "@/controllers/useFetch";
 import TrendingCard from "@/components/TrendingCard";
 import Dropdown from "@/components/Dropdown";
 

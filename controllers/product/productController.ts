@@ -1,5 +1,5 @@
-﻿import { api } from "@/services/api";
-import {Product} from "@/services/product/models/product";
+﻿import { api } from "@/controllers/api";
+import {Product} from "@/models/product/product";
 
 const LOCAL_IP = "http://192.168.0.29:5000";
 const API_URL = process.env.API_URL || 'http://192.168.0.29:5000/api';

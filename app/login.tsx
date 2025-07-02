@@ -9,7 +9,7 @@
 } from "react-native";
 import { useState } from "react";
 import {Stack, useRouter } from "expo-router";
-import {login} from "@/services/auth/authService";
+import {login} from "@/controllers/auth/authController";
 
 export default function Login() {
     const [email, setEmail] = useState("");

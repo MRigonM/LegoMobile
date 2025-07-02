@@ -1,7 +1,7 @@
 ﻿import { Image, ScrollView, Text, View, TouchableOpacity } from "react-native";
 import { useLocalSearchParams } from "expo-router";
-import useFetch from "@/services/useFetch";
-import { fetchProductDetails } from "@/services/product/productService";
+import useFetch from "@/controllers/useFetch";
+import { fetchProductDetails } from "@/controllers/product/productController";
 import { useCallback } from "react";
 
 interface ProductInfo {

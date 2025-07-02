@@ -1,6 +1,6 @@
 ﻿//track searches made by a user
 
-import {Product} from "@/services/product/models/product";
+import {Product} from "@/models/product/product";
 import {Client, Databases, ID, Query} from "react-native-appwrite";
 
 const DATABASE_ID = process.env.EXPO_PUBLIC_APPWRITE_DATABASE_ID!;
