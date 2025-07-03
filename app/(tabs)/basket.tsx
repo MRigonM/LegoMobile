@@ -95,13 +95,13 @@ const Basket = () => {
                             data={basket.items}
                             keyExtractor={(item) => item.id.toString()}
                             renderItem={({ item }) => <BasketItemCard item={item} />}
-                            contentContainerStyle={{ paddingBottom: 200 }} // this is key!
+                            contentContainerStyle={{ paddingBottom: 200 }}
                             showsVerticalScrollIndicator={false}
                         />
                     </>
                 ) : (
                     <View className="flex justify-center items-center flex-1">
-                        <Image source={icons.save} className="size-10 mb-3" tintColor="#fff" />
+                        <Image source={icons.basket} className="size-10 mb-3" tintColor="#fff" />
                         <Text className="text-gray-500 text-base">Your basket is empty</Text>
                     </View>
                 )}
