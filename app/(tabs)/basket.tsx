@@ -6,13 +6,15 @@
     TouchableOpacity,
     Alert,
     KeyboardAvoidingView,
-    Platform,
+    Platform
 } from "react-native";
 import { icons } from "@/constants/icons";
 import { useBasket } from "@/context/basketContext";
 import { BasketItem } from "@/models/basket/basket";
 import { useRouter } from "expo-router";
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import * as SecureStore from 'expo-secure-store';
+import { useState } from "react";
 
 const BasketItemCard = ({ item }: { item: BasketItem }) => {
     const { removeItem, updateQuantity } = useBasket();
@@ -33,7 +35,6 @@ const BasketItemCard = ({ item }: { item: BasketItem }) => {
         if (item.quantity > 1) {
             updateQuantity(item.id, item.quantity - 1);
         } else {
-            // Show alert before removing if quantity is 1
             Alert.alert(
                 "Remove item",
                 "Do you want to remove this item from your basket?",
@@ -54,7 +55,7 @@ const BasketItemCard = ({ item }: { item: BasketItem }) => {
     };
 
     return (
-        <View className="flex-row items-center p-4 mb-4 rounded-xl" style={{ backgroundColor: "#151312" }}>
+        <View className="flex-row items-center p-4 mb-4 rounded-xl bg-dark-200">
             <TouchableOpacity onPress={handlePress} activeOpacity={0.8}>
                 <Image
                     source={{ uri: item.pictureUrl }}
@@ -107,8 +108,31 @@ const BasketItemCard = ({ item }: { item: BasketItem }) => {
 const Basket = () => {
     const { basket } = useBasket();
     const router = useRouter();
+    const [checkingAuth, setCheckingAuth] = useState(false);
 
     const total = basket?.items.reduce((sum, item) => sum + item.price * item.quantity, 0) ?? 0;
+
+    const handleCheckoutPress = async () => {
+        setCheckingAuth(true);
+        try {
+            const token = await SecureStore.getItemAsync('jwt_token');
+
+            if (token) {
+                router.push("/checkout");
+            } else {
+                Alert.alert(
+                    "Login Required",
+                    "You need to be logged in to proceed to checkout.",
+                    [
+                        { text: "Go to Login", onPress: () => router.push("/profile") },
+                        { text: "Cancel", style: "cancel" },
+                    ]
+                );
+            }
+        } finally {
+            setCheckingAuth(false);
+        }
+    };
 
     return (
         <KeyboardAvoidingView
@@ -118,17 +142,14 @@ const Basket = () => {
             <View className="flex-1 px-5 pt-10">
                 <Text className="text-white text-2xl font-bold mb-5">Cart</Text>
 
-
                 {basket?.items.length ? (
-                    <>
-                        <FlatList
-                            data={basket.items}
-                            keyExtractor={(item) => item.id.toString()}
-                            renderItem={({ item }) => <BasketItemCard item={item} />}
-                            contentContainerStyle={{ paddingBottom: 200 }}
-                            showsVerticalScrollIndicator={false}
-                        />
-                    </>
+                    <FlatList
+                        data={basket.items}
+                        keyExtractor={(item) => item.id.toString()}
+                        renderItem={({ item }) => <BasketItemCard item={item} />}
+                        contentContainerStyle={{ paddingBottom: 200 }}
+                        showsVerticalScrollIndicator={false}
+                    />
                 ) : (
                     <View className="flex justify-center items-center flex-1">
                         <Image source={icons.basket} className="size-10 mb-3" tintColor="#fff" />
@@ -145,19 +166,21 @@ const Basket = () => {
                     </View>
 
                     <TouchableOpacity
-                        onPress={() => router.push("/checkout")}
+                        onPress={handleCheckoutPress}
                         className="bg-accent rounded-lg py-4 flex items-center mb-3"
+                        disabled={checkingAuth}
                     >
-                        <Text className="text-white font-bold text-xl">Go to Checkout</Text>
+                        <Text className="text-white font-bold text-xl">
+                            {checkingAuth ? "Checking..." : "Go to Checkout"}
+                        </Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity
                         onPress={() => router.push("/")}
-                        className="flex items-center my-2"
+                        className="flex items-center mb-2"
                     >
                         <Text className="text-gray-400 text-base underline">Continue Shopping</Text>
                     </TouchableOpacity>
-
                 </View>
             )}
         </KeyboardAvoidingView>

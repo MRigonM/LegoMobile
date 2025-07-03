@@ -1,5 +1,4 @@
-﻿import { Image, Text, View, TouchableOpacity } from "react-native";
-import { icons } from "@/constants/icons";
+﻿import { Text, View, TouchableOpacity } from "react-native";
 import { useEffect, useState } from "react";
 import * as SecureStore from 'expo-secure-store';
 import { useRouter } from "expo-router";
