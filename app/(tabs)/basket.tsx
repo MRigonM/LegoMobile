@@ -16,6 +16,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const BasketItemCard = ({ item }: { item: BasketItem }) => {
     const { removeItem, updateQuantity } = useBasket();
+    const router = useRouter();
 
     const confirmDelete = () => {
         Alert.alert("Remove item", "Are you sure you want to remove this item?", [
@@ -28,15 +29,45 @@ const BasketItemCard = ({ item }: { item: BasketItem }) => {
         ]);
     };
 
+    const handleDecreaseQuantity = () => {
+        if (item.quantity > 1) {
+            updateQuantity(item.id, item.quantity - 1);
+        } else {
+            // Show alert before removing if quantity is 1
+            Alert.alert(
+                "Remove item",
+                "Do you want to remove this item from your basket?",
+                [
+                    { text: "Cancel", style: "cancel" },
+                    {
+                        text: "Remove",
+                        style: "destructive",
+                        onPress: () => removeItem(item.id),
+                    },
+                ]
+            );
+        }
+    };
+
+    const handlePress = () => {
+        router.push(`/products/${item.id}`);
+    };
+
     return (
         <View className="flex-row items-center p-4 mb-4 rounded-xl" style={{ backgroundColor: "#151312" }}>
-            <Image
-                source={{ uri: item.pictureUrl }}
-                className="w-36 h-36 rounded-lg"
-                resizeMode="cover"
-            />
+            <TouchableOpacity onPress={handlePress} activeOpacity={0.8}>
+                <Image
+                    source={{ uri: item.pictureUrl }}
+                    className="w-36 h-36 rounded-lg"
+                    resizeMode="cover"
+                />
+            </TouchableOpacity>
             <View className="flex-1 ml-4">
-                <Text className="text-white font-bold text-2xl">{item.productName}</Text>
+                <Text
+                    className="text-white font-bold text-2xl"
+                    onPress={handlePress}>
+                    {item.productName}
+                </Text>
                 <Text className="text-gray-400 text-xs">{item.brand} • {item.type}</Text>
                 <Text className="text-white font-semibold text-xl mt-1">
                     {item.price}$
@@ -55,7 +86,7 @@ const BasketItemCard = ({ item }: { item: BasketItem }) => {
                     </View>
 
                     <TouchableOpacity
-                        onPress={() => updateQuantity(item.id, item.quantity - 1)}
+                        onPress={handleDecreaseQuantity}
                         className="bg-accent w-9 h-9 rounded-lg justify-center items-center"
                     >
                         <Text className="text-white text-lg font-bold">−</Text>
@@ -68,7 +99,6 @@ const BasketItemCard = ({ item }: { item: BasketItem }) => {
                         <Icon name="delete" size={29} color="red" style={{ marginRight: 6 }} />
                     </TouchableOpacity>
                 </View>
-
             </View>
         </View>
     );

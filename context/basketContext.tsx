@@ -1,13 +1,14 @@
 ﻿import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import * as SecureStore from 'expo-secure-store';
-import {BasketItem, CustomerBasket} from "@/models/basket/basket";
-import {getBasket, updateBasket} from "@/controllers/basket/basketController";
+import { BasketItem, CustomerBasket } from "@/models/basket/basket";
+import { getBasket, updateBasket } from "@/controllers/basket/basketController";
 
 interface BasketContextType {
     basket: CustomerBasket | null;
     addItem: (item: BasketItem) => void;
     removeItem: (productId: number) => void;
     updateQuantity: (productId: number, quantity: number) => void;
+    isInBasket: (productId: number) => boolean;
 }
 
 const BasketContext = createContext<BasketContextType | null>(null);
@@ -39,12 +40,12 @@ export const BasketProvider = ({ children }: { children: ReactNode }) => {
     const addItem = async (item: BasketItem) => {
         let current = basket ?? { id: basketId ?? generateId(), items: [], shippingPrice: 0 };
 
-        const index = current.items.findIndex(i => i.id === item.id);
-        if (index === -1) {
-            current.items.push(item);
-        } else {
-            current.items[index].quantity += item.quantity;
+        const exists = current.items.find(i => i.id === item.id);
+        if (exists) {
+            return;
         }
+
+        current.items.push(item);
 
         const updated = await updateBasket(current);
         setBasket(updated);
@@ -64,23 +65,26 @@ export const BasketProvider = ({ children }: { children: ReactNode }) => {
     const updateQuantity = async (productId: number, quantity: number) => {
         if (!basket) return;
 
-        const updatedItems = basket.items.map(item =>
-            item.id === productId ? { ...item, quantity } : item
-        ).filter(item => item.quantity > 0);
+        const updatedItems = basket.items
+            .map(item => item.id === productId ? { ...item, quantity } : item)
+            .filter(item => item.quantity > 0);
 
         const updatedBasket = { ...basket, items: updatedItems };
         const saved = await updateBasket(updatedBasket);
         setBasket(saved);
     };
 
+    const isInBasket = (productId: number) => {
+        return basket?.items.some(i => i.id === productId) ?? false;
+    };
 
     const generateId = () => {
         return Math.random().toString(36).substring(2, 15);
     };
 
     return (
-        <BasketContext.Provider value={{ basket, addItem, removeItem, updateQuantity }}>
-        {children}
+        <BasketContext.Provider value={{ basket, addItem, removeItem, updateQuantity, isInBasket }}>
+            {children}
         </BasketContext.Provider>
     );
 };
