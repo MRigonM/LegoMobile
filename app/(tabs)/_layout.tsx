@@ -7,8 +7,8 @@ import { useEffect } from "react";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
-    shouldShowBanner: true,  // this shows the banner notification
-    shouldShowList: true,    // this adds it to the notification center (iOS)
+    shouldShowBanner: true,
+    shouldShowList: true,
     shouldPlaySound: false,
     shouldSetBadge: false,
   }),
@@ -20,17 +20,16 @@ const TabIcon = ({ focused, icon, title }: any) => {
         return (
             <ImageBackground
                 source={images.highlight}
-                className={
-                    "flex flex-row w-full flex-1 min-w-[112px] min-h-16 mt-4 justify-center items-center rounded-full overflow-hidden"
-                }
+                className="flex flex-row w-full flex-1 min-w-[112px] min-h-16 mt-4 justify-center items-center rounded-full overflow-hidden"
             >
-                <Image source={icon} tintColor={"#151312"} className={"size-5"} />
+
+            <Image source={icon} tintColor={"#151312"} className={"size-5"} />
                 <Text className={"text-secondary text-base font-semibold ml-2"}>{title}</Text>
             </ImageBackground>
         );
     }
     return (
-        <View className={"size-full justify-center items-center rounded-full mt-4"}>
+        <View className={"size-full justify-center items-center rounded-[50px] mt-4"}>
             <Image source={icon} tintColor={"#A8B5DB"} className={"size-5"} />
         </View>
     );
@@ -60,10 +59,10 @@ const _Layout = () => {
                 },
                 tabBarStyle: {
                     backgroundColor: "#0f0D23",
-                    borderRadius: 50,
+                    borderRadius: 100,
                     marginHorizontal: 45,
                     marginBottom: 30,
-                    height: 50,
+                    height: 52,
                     position: "absolute",
                     overflow: "hidden",
                     borderWidth: 1,
@@ -82,12 +81,12 @@ const _Layout = () => {
                 }}
             />
             <Tabs.Screen
-                name="saved"
+                name="basket"
                 options={{
-                    title: "Saved",
+                    title: "Cart",
                     headerShown: false,
                     tabBarIcon: ({ focused }) => (
-                        <TabIcon focused={focused} icon={icons.save} title="Saved" />
+                        <TabIcon focused={focused} icon={icons.basket} title="Cart" />
                     ),
                 }}
             />

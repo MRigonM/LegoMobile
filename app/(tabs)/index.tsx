@@ -66,14 +66,17 @@ export default function Index() {
 
     useEffect(() => {
         if (Array.isArray(trendingProducts) && trendingProducts.length > 0) {
+
             Notifications.scheduleNotificationAsync({
                 content: {
                     title: "Trending Legos!",
                     body: `There are ${trendingProducts.length} hot items right now. Check them out!`,
                 },
+                // @ts-ignore
                 trigger: { seconds: 1 },
             });
         }
+        // @ts-ignore
     }, [trendingProducts]);
 
 
@@ -96,7 +99,6 @@ export default function Index() {
         error: trendingError,
     } = useFetch(getTrendingProducts);
 
-    // 👇 THIS EFFECT NOW RESPECTS FILTERS AND SORT
     useEffect(() => {
         const fetchProducts = async () => {
             try {
