@@ -26,20 +26,12 @@ const ProductCard = ({
                         numberOfLines={1}>
                     {name}
                 </Text>
-                <View className={"flex-row items-center justify-start gap-x-1 mt-1"}>
-                    <Image source={icons.star} className={"size-4"} />
-                    <Text
-                    className={"text-white text-xs font-bold uppercase"}
-                    >
-                        {Math.floor(Math.random() * 5) + 1}
-                    </Text>
-                </View>
                 <View className={"flex-row items-center justify-between"}>
-                    <Text className={"text-xs text-light-300 font-medium mt-1"}>
+                    <Text className={"text-sm text-white font-medium mt-1"}>
                         {price}$
                     </Text>
                     <Text className={"text-xs font-medium text-light-300 uppercase"}>
-                        {productBrand}
+                        {productBrand} • {productType}
                     </Text>
                 </View>
             </TouchableOpacity>

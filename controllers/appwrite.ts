@@ -52,10 +52,12 @@ export const getTrendingProducts = async (): Promise<{ id: any; name: any; pictu
         ]);
 
         return result.documents.map((doc) => ({
-            id: doc.product_id,
-            name: doc.name,
-            pictureUrl: doc.pictureUrl,
+          id: doc.$id,
+          name: doc.name,
+          pictureUrl: doc.pictureUrl,
+          product_id: doc.product_id,
         }));
+
     } catch (error) {
         throw error;
     }

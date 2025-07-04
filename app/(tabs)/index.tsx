@@ -296,44 +296,46 @@ export default function Index() {
                                 scrollEnabled={false}
                                 nestedScrollEnabled={true}
                                 ListFooterComponent={
+                                  !submittedQuery.trim() && totalPages > 1 ? (
                                     <View className="mb-28 mt-5 flex-row justify-center items-center px-5">
-                                        <TouchableOpacity
-                                            disabled={pageIndex === 1}
-                                            onPress={() => setPageIndex(pageIndex - 1)}
-                                            activeOpacity={0.8}
-                                            className={`rounded-lg px-4 py-2 mr-3 ${
-                                                pageIndex === 1 ? "bg-gray-500" : "bg-accent"
-                                            }`}
-                                        >
-                                            <Text className="text-white font-bold text-base">{'←'}</Text>
-                                        </TouchableOpacity>
+                                      <TouchableOpacity
+                                        disabled={pageIndex === 1}
+                                        onPress={() => setPageIndex(pageIndex - 1)}
+                                        activeOpacity={0.8}
+                                        className={`rounded-lg px-4 py-2 mr-3 ${
+                                          pageIndex === 1 ? "bg-gray-500" : "bg-accent"
+                                        }`}
+                                      >
+                                        <Text className="text-white font-bold text-base">{'←'}</Text>
+                                      </TouchableOpacity>
 
-                                        {Array.from({ length: totalPages }, (_, i) => (
-                                            <TouchableOpacity
-                                                key={i}
-                                                onPress={() => setPageIndex(i + 1)}
-                                                activeOpacity={0.8}
-                                                className={`rounded-lg px-4 py-2 mr-3 ${
-                                                    pageIndex === i + 1 ? "bg-accent" : "bg-gray-700"
-                                                }`}
-                                            >
-                                                <Text className="text-white font-bold text-base">
-                                                    {i + 1}
-                                                </Text>
-                                            </TouchableOpacity>
-                                        ))}
-
+                                      {Array.from({ length: totalPages }, (_, i) => (
                                         <TouchableOpacity
-                                            disabled={pageIndex === totalPages}
-                                            onPress={() => setPageIndex(pageIndex + 1)}
-                                            activeOpacity={0.8}
-                                            className={`rounded-lg px-4 py-2 ${
-                                                pageIndex === totalPages ? "bg-gray-500" : "bg-accent"
-                                            }`}
+                                          key={i}
+                                          onPress={() => setPageIndex(i + 1)}
+                                          activeOpacity={0.8}
+                                          className={`rounded-lg px-4 py-2 mr-3 ${
+                                            pageIndex === i + 1 ? "bg-accent" : "bg-gray-700"
+                                          }`}
                                         >
-                                            <Text className="text-white font-bold text-base">{'→'}</Text>
+                                          <Text className="text-white font-bold text-base">
+                                            {i + 1}
+                                          </Text>
                                         </TouchableOpacity>
+                                      ))}
+
+                                      <TouchableOpacity
+                                        disabled={pageIndex === totalPages}
+                                        onPress={() => setPageIndex(pageIndex + 1)}
+                                        activeOpacity={0.8}
+                                        className={`rounded-lg px-4 py-2 ${
+                                          pageIndex === totalPages ? "bg-gray-500" : "bg-accent"
+                                        }`}
+                                      >
+                                        <Text className="text-white font-bold text-base">{'→'}</Text>
+                                      </TouchableOpacity>
                                     </View>
+                                  ) : null
                                 }
                             />
                         )}

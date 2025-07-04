@@ -81,13 +81,6 @@ const ProductDetails = () => {
                         style: "destructive",
                         onPress: () => {
                             removeItem(product.id);
-                            Notifications.scheduleNotificationAsync({
-                                content: {
-                                    title: "Removed from Basket 🛒",
-                                    body: `${product.name} was removed from your basket.`,
-                                },
-                                trigger: null,
-                            });
                         },
                     },
                 ]
@@ -102,24 +95,16 @@ const ProductDetails = () => {
                 brand: product.productBrand,
                 type: product.productType,
             });
-
-            Notifications.scheduleNotificationAsync({
-                content: {
-                    title: "Added to Basket 🛒",
-                    body: `${product.name} has been added to your basket.`,
-                },
-                trigger: null,
-            });
         }
     };
 
     return (
         <View className={"bg-primary flex-1"}>
             <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
-                <View>
+                <View className={"px-4"}>
                     <Image
                         source={{ uri: product.pictureUrl }}
-                        className={"w-full h-[450px] mt-20 px-5 mx-3"}
+                        className={"w-full h-[450px] mt-20"}
                         resizeMode="contain"
                     />
                 </View>

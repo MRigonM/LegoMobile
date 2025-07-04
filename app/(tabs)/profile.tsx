@@ -86,6 +86,13 @@ const Profile = () => {
                         </Text>
 
                         <TouchableOpacity
+                            onPress={() => router.push('/orders')}
+                            className="bg-accent w-full py-4 rounded-xl items-center mb-4"
+                        >
+                            <Text className="text-white text-lg font-bold">View My Orders</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity
                             onPress={handleLogout}
                             className="bg-red-500 w-full py-4 rounded-xl items-center"
                         >
