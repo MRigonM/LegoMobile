@@ -3,11 +3,11 @@ import {View, Text, TouchableOpacity, Image} from "react-native";
 import {images} from "@/constants/images";
 import {MaskedView} from "@/node_modules/@react-navigation/elements/src/MaskedView";
 
-const TrendingCard = ({product: {id, name, pictureUrl}, index}: TrendingCardProduct) => {
+const TrendingCard = ({product: {product_id, name, pictureUrl}, index}: TrendingCardProduct) => {
 
     return (
         // @ts-ignore
-        <Link href={`products/${id}`} asChild>
+        <Link href={`products/${product_id}`} asChild>
             <TouchableOpacity
                 className="items-center"
                 style={{

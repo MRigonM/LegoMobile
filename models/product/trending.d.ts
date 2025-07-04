@@ -5,7 +5,7 @@
 
 interface TrendingProducts {
     searchTerm: string;
-    id : number;
+    product_id : number;
     name : string;
     pictureUrl : string;
     count: number;
