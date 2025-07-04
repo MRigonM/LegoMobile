@@ -1,4 +1,5 @@
-﻿import {
+﻿import React, {useState} from 'react';
+import {
     FlatList,
     Image,
     Text,
@@ -7,27 +8,22 @@
     Alert,
     KeyboardAvoidingView,
     Platform
-} from "react-native";
-import { icons } from "@/constants/icons";
-import { useBasket } from "@/context/basketContext";
-import { BasketItem } from "@/models/basket/basket";
-import { useRouter } from "expo-router";
+} from 'react-native';
+import { icons } from '@/constants/icons';
+import { useBasket } from '@/context/basketContext';
+import { BasketItem } from '@/models/basket/basket';
+import { useRouter } from 'expo-router';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import * as SecureStore from 'expo-secure-store';
-import { useState } from "react";
 
 const BasketItemCard = ({ item }: { item: BasketItem }) => {
     const { removeItem, updateQuantity } = useBasket();
     const router = useRouter();
 
     const confirmDelete = () => {
-        Alert.alert("Remove item", "Are you sure you want to remove this item?", [
-            { text: "Cancel", style: "cancel" },
-            {
-                text: "Remove",
-                style: "destructive",
-                onPress: () => removeItem(item.id),
-            },
+        Alert.alert('Remove item', 'Are you sure you want to remove this item?', [
+            { text: 'Cancel', style: 'cancel' },
+            { text: 'Remove', style: 'destructive', onPress: () => removeItem(item.id) },
         ]);
     };
 
@@ -35,28 +31,16 @@ const BasketItemCard = ({ item }: { item: BasketItem }) => {
         if (item.quantity > 1) {
             updateQuantity(item.id, item.quantity - 1);
         } else {
-            Alert.alert(
-                "Remove item",
-                "Do you want to remove this item from your basket?",
-                [
-                    { text: "Cancel", style: "cancel" },
-                    {
-                        text: "Remove",
-                        style: "destructive",
-                        onPress: () => removeItem(item.id),
-                    },
-                ]
-            );
+            Alert.alert('Remove item', 'Do you want to remove this item from your basket?', [
+                { text: 'Cancel', style: 'cancel' },
+                { text: 'Remove', style: 'destructive', onPress: () => removeItem(item.id) },
+            ]);
         }
-    };
-
-    const handlePress = () => {
-        router.push(`/products/${item.id}`);
     };
 
     return (
         <View className="flex-row items-center p-4 mb-4 rounded-xl bg-dark-200">
-            <TouchableOpacity onPress={handlePress} activeOpacity={0.8}>
+            <TouchableOpacity onPress={() => router.push(`/products/${item.id}`)} activeOpacity={0.8}>
                 <Image
                     source={{ uri: item.pictureUrl }}
                     className="w-36 h-36 rounded-lg"
@@ -66,10 +50,13 @@ const BasketItemCard = ({ item }: { item: BasketItem }) => {
             <View className="flex-1 ml-4">
                 <Text
                     className="text-white font-bold text-2xl"
-                    onPress={handlePress}>
+                    onPress={() => router.push(`/products/${item.id}`)}
+                >
                     {item.productName}
                 </Text>
-                <Text className="text-gray-400 text-xs">{item.brand} • {item.type}</Text>
+                <Text className="text-gray-400 text-xs">
+                    {item.brand} • {item.type}
+                </Text>
                 <Text className="text-white font-semibold text-xl mt-1">
                     {item.price}$
                 </Text>
@@ -93,10 +80,7 @@ const BasketItemCard = ({ item }: { item: BasketItem }) => {
                         <Text className="text-white text-lg font-bold">−</Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity
-                        onPress={confirmDelete}
-                        className="ml-auto px-4 py-3 flex-row items-center"
-                    >
+                    <TouchableOpacity onPress={confirmDelete} className="ml-auto px-4 py-3 flex-row items-center">
                         <Icon name="delete" size={29} color="red" style={{ marginRight: 6 }} />
                     </TouchableOpacity>
                 </View>
@@ -116,18 +100,13 @@ const Basket = () => {
         setCheckingAuth(true);
         try {
             const token = await SecureStore.getItemAsync('jwt_token');
-
             if (token) {
-                router.push("/checkout");
+                router.push('/checkout');
             } else {
-                Alert.alert(
-                    "Login Required",
-                    "You need to be logged in to proceed to checkout.",
-                    [
-                        { text: "Go to Login", onPress: () => router.push("/profile") },
-                        { text: "Cancel", style: "cancel" },
-                    ]
-                );
+                Alert.alert('Login Required', 'You need to be logged in to proceed to checkout.', [
+                    { text: 'Go to Login', onPress: () => router.push('/profile') },
+                    { text: 'Cancel', style: 'cancel' },
+                ]);
             }
         } finally {
             setCheckingAuth(false);
@@ -137,7 +116,7 @@ const Basket = () => {
     return (
         <KeyboardAvoidingView
             className="bg-primary flex-1"
-            behavior={Platform.OS === "ios" ? "padding" : undefined}
+            behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         >
             <View className="flex-1 px-5 pt-10">
                 <Text className="text-white text-2xl font-bold mb-5">Cart</Text>
@@ -145,7 +124,7 @@ const Basket = () => {
                 {basket?.items.length ? (
                     <FlatList
                         data={basket.items}
-                        keyExtractor={(item) => item.id.toString()}
+                        keyExtractor={item => item.id.toString()}
                         renderItem={({ item }) => <BasketItemCard item={item} />}
                         contentContainerStyle={{ paddingBottom: 200 }}
                         showsVerticalScrollIndicator={false}
@@ -171,14 +150,11 @@ const Basket = () => {
                         disabled={checkingAuth}
                     >
                         <Text className="text-white font-bold text-xl">
-                            {checkingAuth ? "Checking..." : "Go to Checkout"}
+                            {checkingAuth ? 'Checking...' : 'Go to Checkout'}
                         </Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity
-                        onPress={() => router.push("/")}
-                        className="flex items-center mb-2"
-                    >
+                    <TouchableOpacity onPress={() => router.push('/')} className="flex items-center mb-2">
                         <Text className="text-gray-400 text-base underline">Continue Shopping</Text>
                     </TouchableOpacity>
                 </View>
