@@ -154,8 +154,8 @@ const Basket = () => {
                         </Text>
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => router.push('/')} className="flex items-center mb-2">
-                        <Text className="text-gray-400 text-base underline">Continue Shopping</Text>
+                    <TouchableOpacity onPress={() => router.push('/')} className="flex items-center">
+                        <Text className="text-gray-400 text-base">Continue Shopping</Text>
                     </TouchableOpacity>
                 </View>
             )}

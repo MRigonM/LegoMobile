@@ -101,7 +101,7 @@ export default function OrdersScreen() {
                 <View className="bg-primary px-5 py-4 border-t bottom-8 mt-4 border-gray-700">
                     <TouchableOpacity
                         onPress={() => router.push('/profile')}
-                        className="bg-accent px-6 py-3 mb-3 rounded-xl mt-4"
+                        className="bg-accent px-6 py-3 rounded-xl mt-4"
                     >
                         <Text className="text-white text-center text-lg font-bold">
                             Go to Profile
