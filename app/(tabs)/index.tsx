@@ -296,7 +296,7 @@ export default function Index() {
                                 scrollEnabled={false}
                                 nestedScrollEnabled={true}
                                 ListFooterComponent={
-                                  !submittedQuery.trim() && totalPages > 1 ? (
+                                  !submittedQuery.trim() ? (
                                     <View className="mb-28 mt-5 flex-row justify-center items-center px-5">
                                       <TouchableOpacity
                                         disabled={pageIndex === 1}
