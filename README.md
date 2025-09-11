@@ -1,50 +1,67 @@
-# Welcome to your Expo app 👋
+# LegoMobile
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A mobile application built with **Expo (React Native + TypeScript)** providing a clean, organized interface for browsing and ordering LEGO kits. The project is now completed and showcased in a demo video.
 
-## Get started
+---
 
-1. Install dependencies
+## ✨ Features
 
-   ```bash
-   npm install
-   ```
+- **Browse LEGO collections**: Navigate through products, categories, or featured sets.  
+- **View product details**: See images, descriptions, prices, and availability.  
+- **Place orders**: Add items to an order, view orders in progress, and manage order state.  
+- **Cross-platform**: Runs on both iOS and Android via Expo.  
+- **API Integration**: Fully connected to a backend for dynamic product catalog.  
+- **User Authentication**: User accounts with secure login and order history.  
+- **Shopping Cart**: Multi-product cart functionality.  
+- **Search & Filters**: Browse and filter products by categories.  
+- **Push Notifications**: Receive updates on new kits or order status.  
 
-2. Start the app
+🔗 **Backend Repository**: [RigonLegoRepo](https://github.com/MRigonM/RigonLegoRepo)
 
-   ```bash
-   npx expo start
-   ```
+### Modern architecture
+- Uses **TypeScript** for type safety across the app.  
+- Implements **file-based routing** from Expo to streamline navigation.  
+- Organizes code into **models, controllers, views/components, and state context**.  
+- Clean styling using **Tailwind CSS (NativeWind)** for utility-first UI styling.  
+- **Environment variables** supported via `.env` file for configuration/secrets.  
+- **Responsive layout**: UI adapts to phones and tablets.  
 
-In the output, you'll find options to open the app in a
+---
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 🎥 Demo
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+Check out a full working demo of the app in action:  
+👉 [Lego Mobile app](https://youtu.be/0t3s9_6g4Y0?si=nNipAPq2tGgtbBbx) 
 
-## Get a fresh project
+The demo shows real-time navigation, product listing, ordering workflow and UI transitions.
 
-When you're ready, run:
+---
 
-```bash
-npm run reset-project
-```
+## 📱 How to Use
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+1. **Browse**: Open the app and scroll through product listings.  
+2. **Details**: Tap on a product to view its details page.  
+3. **Order**: Add a product to your order. View or manage orders in the designated section.  
+4. **Navigation**: Use the bottom/side tab navigator or buttons to move between screens.  
 
-## Learn more
+---
 
-To learn more about developing your project with Expo, look at the following resources:
+## 🛠 Tech Stack & Tools
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+| Technology       | Role                                      |
+|------------------|-------------------------------------------|
+| Expo             | Cross-platform React Native framework     |
+| TypeScript       | Static typing for safer code              |
+| NativeWind       | Tailwind-inspired styling in RN           |
+| React Context    | State management for orders               |
+| File-based routing | Declarative page navigation             |
+| Babel / Metro / ESLint | Build & code quality tooling        |
+| .NET + Web API   | Backend powering catalog, auth & orders   |
 
-## Join the community
+---
 
-Join our community of developers creating universal apps.
+## 🚀 Future Enhancements
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+- **Offline Support**: Cache data and allow browsing without connectivity.  
+- **Enhanced UI**: More animations, dark mode, and accessibility features.  
+
